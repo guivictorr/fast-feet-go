@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import "github.com/guivictorr/fast-feet-go/config"
+
+var logger *config.Logger
 
 func main() {
-	fmt.Println("Hello World")
+	logger = config.GetLogger("main")
+	logger.Info("Hello World")
 }

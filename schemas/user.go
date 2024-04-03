@@ -13,8 +13,8 @@ const (
 
 type User struct {
 	gorm.Model
-	Name     string
-	Cpf      string
-	Password string
-	Role     Role
+	Name     string `gorm:"not null"`
+	Cpf      string `gorm:"unique;not null;size:11"`
+	Password string `gorm:"not null"`
+	Role     Role   `gorm:"not null"`
 }

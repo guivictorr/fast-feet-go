@@ -17,11 +17,11 @@ const (
 
 type Package struct {
 	gorm.Model
-	Name            string
+	Name            string `gorm:"not null"`
 	PickupDate      *time.Time
 	DeliveryDate    *time.Time
-	DeliveryPicture string
-	Address         string
+	DeliveryPicture *string
+	Address         string        `gorm:"not null"`
 	Status          PackageStatus `gorm:"default:pending"`
-	RecipientID     uint
+	RecipientID     uint          `gorm:"not null"`
 }

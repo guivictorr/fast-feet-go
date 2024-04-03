@@ -18,8 +18,8 @@ const (
 type Package struct {
 	gorm.Model
 	Name         string
-	PickupDate   time.Time
-	DeliveryDate time.Time
+	PickupDate   *time.Time
+	DeliveryDate *time.Time
 	Address      string
 	Status       PackageStatus `gorm:"default:pending"`
 	RecipientID  uint

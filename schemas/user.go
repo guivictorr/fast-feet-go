@@ -17,4 +17,5 @@ type User struct {
 	Cpf      string `gorm:"unique;not null;size:11"`
 	Password string `gorm:"not null"`
 	Role     Role   `gorm:"not null"`
+	Packages []Package
 }

@@ -9,6 +9,11 @@ var logger *config.Logger
 
 func main() {
 	logger = config.GetLogger("main")
-	logger.Info("Hello World")
+	err := config.Init()
+	if err != nil {
+		logger.Errorf("error initializing configuration: %v", err)
+		return
+	}
+
 	router.Initialize()
 }

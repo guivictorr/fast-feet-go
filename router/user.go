@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/guivictorr/fast-feet-go/handler"
 )
 
 func initializeUsersRoutes(r *gin.RouterGroup) {
@@ -17,11 +18,7 @@ func initializeUsersRoutes(r *gin.RouterGroup) {
 			"message": "get user " + ctx.Param("id"),
 		})
 	})
-	r.POST("/users", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "create users",
-		})
-	})
+	r.POST("/users", handler.CreateUserHandler)
 	r.PUT("/users/:id", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "update user " + ctx.Param("id"),

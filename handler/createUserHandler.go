@@ -72,8 +72,12 @@ func CreateUserHandler(ctx *gin.Context) {
 		return
 	}
 
-	// TODO: HIDE PASSWORD FROM RESPONSE
-	sendSuccess(ctx, user, "createUser")
+	userResponse := CreateUserRequest{
+		Name: user.Name,
+		Cpf:  user.Cpf,
+		Role: user.Role,
+	}
+	sendSuccess(ctx, userResponse, "createUser")
 }
 
 func generatePassword(raw string) (string, error) {

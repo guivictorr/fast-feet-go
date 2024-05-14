@@ -20,6 +20,12 @@ type CreateUserRequest struct {
 	Role     schemas.Role `json:"role"`
 }
 
+type CreateUserResponse struct {
+	Name string       `json:"name"`
+	Cpf  string       `json:"cpf"`
+	Role schemas.Role `json:"role"`
+}
+
 func (r *CreateUserRequest) Validate() error {
 	if r.Name == "" && r.Cpf == "" && r.Password == "" && r.Role == "" {
 		return fmt.Errorf("empty request")
@@ -66,9 +72,9 @@ func CreateUserHandler(ctx *gin.Context) {
 		Role:     request.Role,
 	}
 
-	userQueryResult := db.First(&user)
+	u := db.Where("Cpf = ?", request.Cpf).Find(&user)
 
-	if userQueryResult.RowsAffected > 0 {
+	if u.RowsAffected == 1 {
 		logger.Errorf("this user already exists")
 		sendError(ctx, http.StatusConflict, "user already exists")
 		return
@@ -80,7 +86,7 @@ func CreateUserHandler(ctx *gin.Context) {
 		return
 	}
 
-	userResponse := CreateUserRequest{
+	userResponse := CreateUserResponse{
 		Name: user.Name,
 		Cpf:  user.Cpf,
 		Role: user.Role,

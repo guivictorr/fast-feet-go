@@ -16,9 +16,5 @@ func initializeUsersRoutes(r *gin.RouterGroup) {
 			"message": "update user " + ctx.Param("id"),
 		})
 	})
-	r.DELETE("/users/:id", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "delete user " + ctx.Param("id"),
-		})
-	})
+	r.DELETE("/users/:id", handler.DeleteUserHandler)
 }

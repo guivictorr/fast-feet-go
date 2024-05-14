@@ -9,11 +9,7 @@ import (
 
 func initializeUsersRoutes(r *gin.RouterGroup) {
 	r.GET("/users", handler.ListUsersHandler)
-	r.GET("/users/:id", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "get user " + ctx.Param("id"),
-		})
-	})
+	r.GET("/users/:id", handler.FindUserHandler)
 	r.POST("/users", handler.CreateUserHandler)
 	r.PUT("/users/:id", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{

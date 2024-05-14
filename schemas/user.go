@@ -15,7 +15,7 @@ type User struct {
 	gorm.Model
 	Name     string `gorm:"not null"`
 	Cpf      string `gorm:"unique;not null;size:11"`
-	Password string `gorm:"not null"`
+	Password string `gorm:"not null" json:"-"`
 	Role     Role   `gorm:"not null"`
 	Packages []Package
 }

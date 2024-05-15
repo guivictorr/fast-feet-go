@@ -7,9 +7,20 @@ import (
 type Role string
 
 const (
-	Admin       Role = "admin"
-	DeliveryMan Role = "deliveryman"
+	None    Role = ""
+	Admin   Role = "admin"
+	Courier Role = "courier"
 )
+
+func (r Role) IsValid() bool {
+	switch r {
+	case Admin, Courier:
+		return true
+	// Add more roles here...
+	default:
+		return false
+	}
+}
 
 type User struct {
 	gorm.Model

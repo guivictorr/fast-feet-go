@@ -15,7 +15,7 @@ func DeleteUserHandler(ctx *gin.Context) {
 		return
 	}
 
-	if err := db.Delete(&user).Error; err != nil {
+	if err := db.Unscoped().Delete(&user).Error; err != nil {
 		sendError(ctx, http.StatusInternalServerError, "error trying to delete user")
 		return
 	}

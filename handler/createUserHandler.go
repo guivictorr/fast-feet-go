@@ -9,10 +9,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func errParamIsRequired(name, typ string) error {
-	return fmt.Errorf("param: %s (type: %s) is required", name, typ)
-}
-
 type CreateUserRequest struct {
 	Name     string       `json:"name"`
 	Cpf      string       `json:"cpf"`
@@ -31,6 +27,10 @@ func (r *CreateUserRequest) Validate() error {
 		return fmt.Errorf("empty request")
 	}
 
+	if len(r.Cpf) != 11 {
+		return fmt.Errorf("cpf must have 11 characters")
+	}
+
 	if r.Name == "" {
 		return errParamIsRequired("Name", "string")
 	}
@@ -40,8 +40,8 @@ func (r *CreateUserRequest) Validate() error {
 	if r.Password == "" {
 		return errParamIsRequired("Password", "string")
 	}
-	if r.Role == "" {
-		return errParamIsRequired("Role", "string")
+	if !r.Role.IsValid() {
+		return fmt.Errorf("this role is invalid: %v", r.Role)
 	}
 	return nil
 }
@@ -74,7 +74,7 @@ func CreateUserHandler(ctx *gin.Context) {
 
 	u := db.Where("Cpf = ?", request.Cpf).Find(&user)
 
-	if u.RowsAffected == 1 {
+	if u.RowsAffected > 0 {
 		logger.Errorf("this user already exists")
 		sendError(ctx, http.StatusConflict, "user already exists")
 		return

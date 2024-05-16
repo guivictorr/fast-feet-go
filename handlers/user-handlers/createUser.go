@@ -25,7 +25,7 @@ func (h *handler) CreateUserHandler(ctx *gin.Context) {
 		utils.APIResponse(ctx, "User created successfully", statusCode, http.MethodPost, userResult)
 		return
 	case http.StatusConflict:
-		utils.APIResponse(ctx, "Email already taken", statusCode, http.MethodPost, nil)
+		utils.APIResponse(ctx, "This user already exists", statusCode, http.MethodPost, nil)
 		return
 	case http.StatusExpectationFailed:
 		utils.APIResponse(ctx, "Unable to create an account", statusCode, http.MethodPost, nil)

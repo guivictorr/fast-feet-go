@@ -24,14 +24,13 @@ func (repo *repository) CreateUser(input *models.UserEntity) (*models.UserEntity
 
 	var user models.UserEntity
 
-	// CHECK IF THIS IS CORRECT
 	checkIfUserExists := db.Select("*").Where("cpf=?", input.Cpf).Find(&user)
 
 	if checkIfUserExists.RowsAffected > 0 {
 		return nil, http.StatusConflict
 	}
 
-	createUser := db.Create(&user)
+	createUser := db.Create(&input)
 
 	if createUser.Error != nil {
 		return nil, http.StatusExpectationFailed

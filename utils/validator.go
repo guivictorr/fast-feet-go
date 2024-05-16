@@ -12,6 +12,7 @@ type Error struct {
 
 func GoValidator(s interface{}) []validator.FieldError {
 	validate := validator.New(validator.WithRequiredStructEnabled())
+
 	err := validate.Struct(s)
 	if err != nil {
 		return err.(validator.ValidationErrors)

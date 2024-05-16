@@ -35,12 +35,3 @@ const (
 	Admin   Role = "admin"
 	Courier Role = "courier"
 )
-
-func (r Role) IsValid() bool {
-	switch r {
-	case Admin, Courier:
-		return true
-	default:
-		return false
-	}
-}

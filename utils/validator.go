@@ -1,7 +1,7 @@
 package utils
 
 import (
-	gpc "github.com/restuwahyu13/go-playground-converter"
+	"github.com/go-playground/validator/v10"
 )
 
 type Error struct {
@@ -10,14 +10,12 @@ type Error struct {
 	} `json:"results"`
 }
 
-// IMPROVE THIS VALIDATOR CAUSE THE ERROR OBJECT IS RETURNING EMPTY
-func GoValidator(s interface{}) error {
-	validator := gpc.GoValidator()
-	err := validator.Struct(s)
-	// res, err := gpc.Validator(s)
-	// if err != nil {
-	// 	panic(err)
-	// }
+func GoValidator(s interface{}) []validator.FieldError {
+	validate := validator.New(validator.WithRequiredStructEnabled())
+	err := validate.Struct(s)
+	if err != nil {
+		return err.(validator.ValidationErrors)
+	}
 
-	return err
+	return nil
 }

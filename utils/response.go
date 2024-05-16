@@ -1,11 +1,14 @@
 package utils
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
+)
 
 type ErrorResponse struct {
-	Errors     interface{} `json:"errors"`
-	Method     string      `json:"method"`
-	StatusCode int         `json:"statusCode"`
+	Method     string   `json:"method"`
+	Errors     []string `json:"errors"`
+	StatusCode int      `json:"statusCode"`
 }
 type Responses struct {
 	Data       interface{} `json:"data"`
@@ -30,11 +33,16 @@ func APIResponse(ctx *gin.Context, Message string, StatusCode int, Method string
 	}
 }
 
-func ValidatorErrorResponse(ctx *gin.Context, StatusCode int, Method string, Error interface{}) {
+func ValidatorErrorResponse(ctx *gin.Context, StatusCode int, Method string, Errors []validator.FieldError) {
+	errorMessages := []string{}
+	for _, err := range Errors {
+		message := err.Error()
+		errorMessages = append(errorMessages, message)
+	}
 	errResponse := ErrorResponse{
 		StatusCode: StatusCode,
 		Method:     Method,
-		Errors:     Error,
+		Errors:     errorMessages,
 	}
 
 	ctx.JSON(StatusCode, errResponse)

@@ -18,6 +18,7 @@ func NewUserService(repo *repository) *service {
 
 func (s *service) CreateUser(input *UserInput) (*models.UserEntity, int) {
 	user := models.UserEntity{
+		Name:     input.Name,
 		Cpf:      input.Cpf,
 		Password: input.Password,
 		Role:     input.Role,

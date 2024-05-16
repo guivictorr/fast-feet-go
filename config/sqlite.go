@@ -3,7 +3,7 @@ package config
 import (
 	"os"
 
-	"github.com/guivictorr/fast-feet-go/schemas"
+	"github.com/guivictorr/fast-feet-go/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -42,7 +42,7 @@ func InitializeSQLite() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	err = db.AutoMigrate(&schemas.User{}, &schemas.Package{}, &schemas.Recipient{})
+	err = db.AutoMigrate(&models.UserEntity{})
 	if err != nil {
 		logger.Errorf("sqlite migration error: %v", err)
 		return nil, err

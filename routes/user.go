@@ -16,5 +16,5 @@ func InitUserRoutes(db *gorm.DB, route *gin.RouterGroup) {
 	route.GET("/:id", userHandlers.FindUserHandler)
 	route.POST("/", userHandlers.CreateUserHandler)
 	// route.PUT("/:id", userHandlers.UpdateUserHandler)
-	// route.DELETE("/:id", userHandlers.DeleteUserHandler)
+	route.DELETE("/:id", userHandlers.DeleteUserHandler)
 }

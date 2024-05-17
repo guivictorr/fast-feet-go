@@ -11,6 +11,7 @@ type Repository interface {
 	CreateUser(*models.UserEntity) (*models.UserEntity, int)
 	ListUsers() ([]models.UserEntity, int)
 	FindUser(userId string) (*models.UserEntity, int)
+	DeleteUser(userId string) int
 }
 
 type repository struct {
@@ -67,4 +68,20 @@ func (repo *repository) FindUser(userId string) (*models.UserEntity, int) {
 	}
 
 	return user, http.StatusOK
+}
+
+func (repo *repository) DeleteUser(userId string) int {
+	db := repo.db
+
+	var user *models.UserEntity
+
+	if rowsAffected := db.Where("id=?", userId).Find(&user).RowsAffected; rowsAffected <= 0 {
+		return http.StatusNotFound
+	}
+
+	if err := db.Delete(&user).Error; err != nil {
+		return http.StatusInternalServerError
+	}
+
+	return http.StatusNoContent
 }

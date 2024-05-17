@@ -8,6 +8,7 @@ type Service interface {
 	CreateUser(*UserInput) (*models.UserEntity, int)
 	ListUsers() ([]models.UserEntity, int)
 	FindUser(userId string) (*models.UserEntity, int)
+	DeleteUser(userId string) int
 }
 
 type service struct {
@@ -34,4 +35,8 @@ func (s *service) ListUsers() ([]models.UserEntity, int) {
 
 func (s *service) FindUser(userId string) (*models.UserEntity, int) {
 	return s.repository.FindUser(userId)
+}
+
+func (s *service) DeleteUser(userId string) int {
+	return s.repository.DeleteUser(userId)
 }

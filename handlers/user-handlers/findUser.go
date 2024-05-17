@@ -14,12 +14,12 @@ func (h *handler) FindUserHandler(ctx *gin.Context) {
 
 	switch statusCode {
 	case http.StatusOK:
-		utils.APIResponse(ctx, "User found successfully", statusCode, http.MethodGet, userResult)
+		utils.APIResponse(ctx, "User found successfully", statusCode, userResult)
 		return
 	case http.StatusNotFound:
-		utils.APIResponse(ctx, "User not found", statusCode, http.MethodGet, nil)
+		utils.APIResponse(ctx, "User not found", statusCode, nil)
 		return
 	default:
-		utils.APIResponse(ctx, "Something went wrong", http.StatusBadRequest, http.MethodGet, nil)
+		utils.APIResponse(ctx, "Something went wrong", http.StatusBadRequest, nil)
 	}
 }

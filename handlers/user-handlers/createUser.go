@@ -22,15 +22,15 @@ func (h *handler) CreateUserHandler(ctx *gin.Context) {
 
 	switch statusCode {
 	case http.StatusCreated:
-		utils.APIResponse(ctx, "User created successfully", statusCode, http.MethodPost, userResult)
+		utils.APIResponse(ctx, "User created successfully", statusCode, userResult)
 		return
 	case http.StatusConflict:
-		utils.APIResponse(ctx, "This user already exists", statusCode, http.MethodPost, nil)
+		utils.APIResponse(ctx, "This user already exists", statusCode, nil)
 		return
 	case http.StatusExpectationFailed:
-		utils.APIResponse(ctx, "Unable to create an account", statusCode, http.MethodPost, nil)
+		utils.APIResponse(ctx, "Unable to create an account", statusCode, nil)
 		return
 	default:
-		utils.APIResponse(ctx, "Something went wrong", http.StatusBadRequest, http.MethodPost, nil)
+		utils.APIResponse(ctx, "Something went wrong", http.StatusBadRequest, nil)
 	}
 }

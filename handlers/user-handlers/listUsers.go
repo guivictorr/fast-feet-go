@@ -12,9 +12,9 @@ func (h *handler) ListUsersHandler(ctx *gin.Context) {
 
 	switch statusCode {
 	case http.StatusOK:
-		utils.APIResponse(ctx, "Success listing users", statusCode, http.MethodPost, userResult)
+		utils.APIResponse(ctx, "Success listing users", statusCode, userResult)
 		return
 	default:
-		utils.APIResponse(ctx, "Something went wrong", http.StatusBadRequest, http.MethodPost, nil)
+		utils.APIResponse(ctx, "Something went wrong", http.StatusBadRequest, nil)
 	}
 }

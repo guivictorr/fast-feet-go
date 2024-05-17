@@ -6,6 +6,7 @@ import (
 
 type Service interface {
 	CreateUser(*UserInput) (*models.UserEntity, int)
+	ListUsers() ([]models.UserEntity, int)
 }
 
 type service struct {
@@ -24,4 +25,8 @@ func (s *service) CreateUser(input *UserInput) (*models.UserEntity, int) {
 		Role:     input.Role,
 	}
 	return s.repository.CreateUser(&user)
+}
+
+func (s *service) ListUsers() ([]models.UserEntity, int) {
+	return s.repository.ListUsers()
 }

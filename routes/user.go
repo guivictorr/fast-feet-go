@@ -13,7 +13,7 @@ func InitUserRoutes(db *gorm.DB, route *gin.RouterGroup) {
 	userHandlers := userHandlers.NewHandler(userService)
 
 	route.GET("/", userHandlers.ListUsersHandler)
-	// route.GET("/:id", userHandlers.FindUserHandler)
+	route.GET("/:id", userHandlers.FindUserHandler)
 	route.POST("/", userHandlers.CreateUserHandler)
 	// route.PUT("/:id", userHandlers.UpdateUserHandler)
 	// route.DELETE("/:id", userHandlers.DeleteUserHandler)

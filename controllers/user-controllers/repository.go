@@ -10,6 +10,7 @@ import (
 type Repository interface {
 	CreateUser(*models.UserEntity) (*models.UserEntity, int)
 	ListUsers() ([]models.UserEntity, int)
+	FindUser(userId string) (*models.UserEntity, int)
 }
 
 type repository struct {
@@ -52,4 +53,18 @@ func (repo *repository) ListUsers() ([]models.UserEntity, int) {
 	}
 
 	return users, http.StatusOK
+}
+
+func (repo *repository) FindUser(userId string) (*models.UserEntity, int) {
+	db := repo.db
+
+	var user *models.UserEntity
+
+	checkIfUsersExists := db.Where("id=?", userId).Find(&user)
+
+	if checkIfUsersExists.RowsAffected <= 0 {
+		return nil, http.StatusNotFound
+	}
+
+	return user, http.StatusOK
 }

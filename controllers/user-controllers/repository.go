@@ -27,15 +27,11 @@ func (repo *repository) CreateUser(input *models.UserEntity) (*models.UserEntity
 
 	var user models.UserEntity
 
-	checkIfUserExists := db.Select("*").Where("cpf=?", input.Cpf).Find(&user)
-
-	if checkIfUserExists.RowsAffected > 0 {
+	if rowsAffected := db.Select("*").Where("cpf=?", input.Cpf).Find(&user).RowsAffected; rowsAffected > 0 {
 		return nil, http.StatusConflict
 	}
 
-	createUser := db.Create(&input)
-
-	if createUser.Error != nil {
+	if err := db.Create(&input).Error; err != nil {
 		return nil, http.StatusExpectationFailed
 	}
 
@@ -47,9 +43,7 @@ func (repo *repository) ListUsers() ([]models.UserEntity, int) {
 
 	var users []models.UserEntity
 
-	checkIfUsersExists := db.Find(&users)
-
-	if checkIfUsersExists.Error != nil {
+	if err := db.Find(&users).Error; err != nil {
 		return nil, http.StatusNotFound
 	}
 
@@ -61,9 +55,7 @@ func (repo *repository) FindUser(userId string) (*models.UserEntity, int) {
 
 	var user *models.UserEntity
 
-	checkIfUsersExists := db.Where("id=?", userId).Find(&user)
-
-	if checkIfUsersExists.RowsAffected <= 0 {
+	if rowsAffected := db.Where("id=?", userId).Find(&user).RowsAffected; rowsAffected <= 0 {
 		return nil, http.StatusNotFound
 	}
 

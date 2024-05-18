@@ -12,6 +12,7 @@ type Repository interface {
 	ListUsers() ([]models.UserEntity, int)
 	FindUser(userId string) (*models.UserEntity, int)
 	DeleteUser(userId string) int
+	UpdateUser(*models.UserEntity) (*models.UserEntity, int)
 }
 
 type repository struct {
@@ -76,4 +77,20 @@ func (repo *repository) DeleteUser(userId string) int {
 	}
 
 	return http.StatusNoContent
+}
+
+func (repo *repository) UpdateUser(input *models.UserEntity) (*models.UserEntity, int) {
+	db := repo.db
+
+	var user models.UserEntity
+
+	if rowsAffected := db.Select("*").Where("id=?", input.ID).Find(&user).RowsAffected; rowsAffected <= 0 {
+		return nil, http.StatusNotFound
+	}
+
+	if err := db.Model(&user).Updates(&input).Error; err != nil {
+		return nil, http.StatusExpectationFailed
+	}
+
+	return &user, http.StatusOK
 }

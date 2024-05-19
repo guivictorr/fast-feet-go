@@ -16,7 +16,7 @@ func NewAuthHandler(service authControllers.Service) *handler {
 	return &handler{service: service}
 }
 
-func (h *handler) SessionHandler(ctx *gin.Context) {
+func (h *handler) CreateSessionHandler(ctx *gin.Context) {
 	var input authControllers.SessionInput
 
 	ctx.ShouldBindJSON(&input)

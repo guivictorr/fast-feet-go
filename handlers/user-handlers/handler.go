@@ -1,11 +1,11 @@
 package userHandlers
 
-import userControllers "github.com/guivictorr/fast-feet-go/controllers/user-controllers"
+import authControllers "github.com/guivictorr/fast-feet-go/controllers/auth-controllers"
 
 type handler struct {
-	service userControllers.Service
+	service authControllers.Service
 }
 
-func NewHandler(service userControllers.Service) *handler {
+func NewHandler(service authControllers.Service) *handler {
 	return &handler{service: service}
 }

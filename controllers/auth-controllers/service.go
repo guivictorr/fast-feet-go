@@ -5,7 +5,7 @@ import (
 )
 
 type Service interface {
-	CreateSession(input *models.UserEntity) (*models.UserEntity, int)
+	CreateSession(input *SessionInput) (*models.UserEntity, int)
 }
 
 type service struct {

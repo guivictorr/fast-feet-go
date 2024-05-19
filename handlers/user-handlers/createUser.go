@@ -14,7 +14,7 @@ func (h *handler) CreateUserHandler(ctx *gin.Context) {
 
 	err := utils.GoValidator(&input)
 	if err != nil {
-		utils.ValidatorErrorResponse(ctx, http.StatusBadRequest, http.MethodPost, err)
+		utils.ValidatorErrorResponse(ctx, http.StatusBadRequest, err)
 		return
 	}
 

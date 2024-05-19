@@ -33,7 +33,7 @@ func APIResponse(ctx *gin.Context, Message string, StatusCode int, Data interfac
 	}
 }
 
-func ValidatorErrorResponse(ctx *gin.Context, StatusCode int, Method string, Errors []validator.FieldError) {
+func ValidatorErrorResponse(ctx *gin.Context, StatusCode int, Errors []validator.FieldError) {
 	errorMessages := []string{}
 	for _, err := range Errors {
 		message := err.Error()
@@ -41,7 +41,7 @@ func ValidatorErrorResponse(ctx *gin.Context, StatusCode int, Method string, Err
 	}
 	errResponse := ErrorResponse{
 		StatusCode: StatusCode,
-		Method:     Method,
+		Method:     ctx.Request.Method,
 		Errors:     errorMessages,
 	}
 

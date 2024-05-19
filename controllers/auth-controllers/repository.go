@@ -9,18 +9,18 @@ import (
 )
 
 type Repository interface {
-	CreateSession(input SessionInput) (*models.UserEntity, int)
+	CreateSession(input *models.UserEntity) (*models.UserEntity, int)
 }
 
 type repository struct {
 	db *gorm.DB
 }
 
-func NewSessionController(db *gorm.DB) *repository {
+func NewAuthRepository(db *gorm.DB) *repository {
 	return &repository{db: db}
 }
 
-func (r *repository) CreateSession(input SessionInput) (*models.UserEntity, int) {
+func (r *repository) CreateSession(input *models.UserEntity) (*models.UserEntity, int) {
 	var users models.UserEntity
 	db := r.db.Model(&users)
 

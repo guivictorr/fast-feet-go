@@ -32,7 +32,7 @@ func (h *handler) CreateSessionHandler(ctx *gin.Context) {
 	switch statusCode {
 	case http.StatusAccepted:
 		accessTokenData := map[string]interface{}{"id": sessionResult.ID, "cpf": sessionResult.Cpf, "role": sessionResult.Role}
-		accessToken, errToken := utils.Sign(accessTokenData, "22b497d6fc174723624066c773f9461edf1e0355b9117869625c0b151eda7171", 24*60*1)
+		accessToken, errToken := utils.Sign(accessTokenData, "JWT_SECRET", 24*60*1)
 
 		if errToken != nil {
 			utils.APIResponse(ctx, "Generate accessToken failed", http.StatusBadRequest, nil)

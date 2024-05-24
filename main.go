@@ -32,6 +32,8 @@ func SetupAppRouter() *gin.Engine {
 	routes.InitUserRoutes(db, users)
 	auth := api.Group("/auth")
 	routes.InitAuthRoutes(db, auth)
+	packages := api.Group("/packages")
+	routes.InitPackagesRoutes(db, packages)
 
 	return router
 }
